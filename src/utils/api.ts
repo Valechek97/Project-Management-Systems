@@ -1,24 +1,22 @@
 import { Task, Board } from '../types';
 
-// Mock данные
 let boards: Board[] = [
-  { id: '1', title: 'Разработка', description: 'Задачи по разработке', createdAt: new Date() },
-  { id: '2', title: 'Дизайн', description: 'Задачи по дизайну', createdAt: new Date() },
+  { id: '1', title: 'Заминированный тапок', description: 'Дернуть тапок палкой', createdAt: new Date() },
+  { id: '2', title: 'Анекдоты бам-бам-бам', description: 'Анекдоты от деда Бом-Бома', createdAt: new Date() },
 ];
 
 let tasks: Task[] = [
   {
     id: '1',
-    title: 'Реализовать авторизацию',
-    description: 'Добавить систему входа/регистрации',
+    title: 'Рассказать анекдот',
+    description: 'Добавить в конце анекдота бам-бам-бам',
     priority: 'high',
     status: 'in-progress',
-    assignee: 'Иван Иванов',
+    assignee: 'Дед Бом-Бом',
     boardId: '1',
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  // Добавьте другие задачи по аналогии
 ];
 
 export const fetchBoards = async (): Promise<Board[]> => {
