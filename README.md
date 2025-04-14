@@ -1,54 +1,33 @@
-# React + TypeScript + Vite
+Приветствую, команда проверки тестового задания! Сразу честно, чтобы никого не обманывать - в проекте остались ошибки, поэтому он не запускается. Тем не менее загружаю файлы своих трудов. Основные моменты по ходу выполнения тестового задания:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Для начала я уточнил, какая версия Node.js уже установлена и используется. На моём компьютере это v22.14.0.
 
-Currently, two official plugins are available:
+Создал на Рабочем столе папку react-site и запишем в неё исходные данные нового проекта на React. Как указано в дополнительных технических требованиях – сделал это с помощью системы сборки Vite и с учётом дальнейшего использования TypeScript. Сразу же использовал команду install react-route-dom с целью дальнейшего роутинга нашего проекта:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![image](https://github.com/user-attachments/assets/db0fa466-ba52-4668-b5fb-144d347b636f)
 
-## Expanding the ESLint configuration
+Чтобы было всё стильно и красиво, как указано в дополнительных технических требованиях, воспользовался библиотекой React-компонентов Material-UI:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Все пакеты были успешно установлены. 
+Открыл папку с созданным проектом в Visual Studio Code и в ./src создал папку «components», где будут храниться 3 наших основных компонента в виде файлов .tsx (так как по ТЗ желательно использовать TypeScript):
+1)	Header.tsx для «шапки» нашего проекта;
+2)	TaskForm.tsx для формы, в которой будет описываться задача;
+3)	TaskModal.tsx для редактирования и просмотра поставленной задачи.
+4)	
+В header.tsx, согласно техническому заданию должно быть меню с переходом на страницы «Список всех задач» «Список досок», а также кнопка «Создать задачу». Меню обернул в контейнер AppBar со статической позицией, который станет основной навигационной панели.  В контейнере Box расположил в виде кнопок две основных ссылки и отдельной кнопку для создания новой задачи. Все элементы импортировал из библиотеки Material-UI. Также заранее заложил компонент TaskForm и импортировал его из соответствующего созданного файла, что кнопка с созданием задачи была функциональна. Сам хеадер инициализировал в качестве функции. В нее добавил константы с навигацией, открытием формы, а также TaskData для асинхронной обработки данных. Link и useNavigator импортировал через react-router-dom для роутинга.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+В TaskForm.tsx создал основную форму редактирования задачи. Задал константы с названием наших проектов, приоритетами важности, исполнителями и статусами выполнения. С помощью FormControl свяжзал поля нашей формы с константами, чтобы получить выпадающий список с выбором одного из значений массива наших констант, а благодаря компоненту TextField дал возможность взаимодействовать с полями формы, где нужно ввести название задачи и описание того, что предстоит сделать. Также обратился к компоненту DialogAction из используемого Material-UI, внутри которого поместил кнопки Button с возможностью отменить создание новой задачи, а также с возможностью создать или обновить задачу.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Последний компонент, который используется в этом проекте – это TaskModal.tsx, который будет являться модальным окном для просмотра и редактирования проекта. Внутри воспользовался компонентом Chip из Material UI для основных критериев описания задачи (значения тех самых констант, которые мы задавали в TaskForm.tsx. Компонент Сhip оборачиваем в компонент Typography в качестве связующего между семантической версткой и вариантом интерфейса. Кстати про интерфейсы: так как использовал Typescript, в начале TaskForm.tsx и TaskModal.tsx прописал соответствующие interface с пропсами (свойствами). Ну и конечно же не забыл про импорты в начале используемых компонентов из react и Material UI.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Переходим к описанию страниц, согласно ТЗ. В структуре проекта создал путь .src/pages. Здесь созданы страницы: boards.tsx — страница, на которой отображены все доски; id.tsx — страница доски проекта, issues.tsx — страница всех задач всех проектов.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Начнем с issues.tsx. Тут мной создается таблица с задачами проектов, которая упаковывается в TableContainer. В шапке таблицы TableHead в компонентах TableCell прописал основные критерии: «Название», «Доска», «Статус», «Приоритет», «Исполнитель». В теле таблицы TableBody в компоненты TableCell прописываем возможные значения этих критериев. На этой же странице вверху написал функции для развертывания досо со всеми задачами (загрузка данных, обновление, создание доски, получение название доски и т.д.). Всё это задал с помощью констант. Ну и конечно же указал импорты соответствующих элементов из библиотек и уже созданных компонентов.
+
+В boards.tsx формирую список всех наших проектных задач. При монтировании компонента загружаю список досок через API-функцию fetchBoards() и сохраняю полученные данные в состоянии boards через setBoards. Заострю внимание, что пустой массив зависимостей [] означает, что эффект выполнится только один раз при загрузке компонента. Сам список поместил в контейнер компонента Box, в которой обернул компонент Grid, отвечающий за адаптивное отображение элементов досок. Получается компоновка задач столбцами, как по ТЗ.
+
+В id.tsx предусматриваю просмотр конкретной задачи. С помощью useEffect() загружаю данные доски и её задач при изменении id (из URL параметров) и использует два API-запроса: fetchBoardById и fetchTasks. Также воспользовался обработчиками событий. Вёрстку исполнил также с помощью компонентов Grid для адаптивного отображения деталей задачи, а также, как говорил уже ранее, Typography в качестве связующего между семантической версткой и вариантом интерфейса. 
+
+
+
+
